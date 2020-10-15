@@ -1,0 +1,9 @@
+package com.company;
+
+public class Main {
+    public static void main(String[] args) {
+        MyFloat a = new MyFloat(534465, 4);
+        MyFloat b = new MyFloat(12233, 3);
+        a.compare(b);
+    }
+}
