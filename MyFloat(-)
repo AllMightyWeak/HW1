@@ -1,0 +1,105 @@
+package com.company;
+
+public class MyFloat {
+    private long mantissa;
+    private long exponent;
+
+    public MyFloat(int mantissa, int exponent) {
+        this.mantissa = mantissa;
+        this.exponent = exponent;
+    }
+
+    public long getExponent() {
+        return exponent;
+    }
+
+    public long getMantissa() {
+        return mantissa;
+    }
+
+    public void compare(MyFloat b) {
+        long bexponent = b.getExponent();
+        long bmantissa = b.getMantissa();
+        if (this.exponent > bexponent) {
+            long delta = this.exponent - bexponent;
+            bmantissa = bmantissa * (long) Math.pow(10, delta);
+            long resultexponent = this.exponent;
+            if (this.mantissa > bmantissa) {
+                long resultmantissa = this.mantissa - bmantissa;
+                outputPlus(resultmantissa, resultexponent);
+            } else {
+                long resultmantissa = Math.abs(this.mantissa - bmantissa);
+                outputMin(resultmantissa, resultexponent);
+            }
+        }
+        if (this.exponent < bexponent) {
+            long delta = bexponent - this.exponent;
+            this.mantissa = this.mantissa * (long) Math.pow(10, delta);
+            long resultexponent = bexponent;
+            if (this.mantissa > bmantissa) {
+                long resultmantissa = this.mantissa - bmantissa;
+                outputPlus(resultmantissa, resultexponent);
+            } else {
+                long resultmantissa = Math.abs(this.mantissa - bmantissa);
+                outputMin(resultmantissa, resultexponent);
+            }
+        }
+        if (this.exponent == bexponent) {
+            long resultexponent = bexponent;
+            if (this.mantissa > bmantissa) {
+                long resultmantissa = this.mantissa - bmantissa;
+                outputPlus(resultmantissa, resultexponent);
+            } else {
+                long resultmantissa = Math.abs(this.mantissa - bmantissa);
+                outputMin(resultmantissa, resultexponent);
+            }
+        }
+    }
+
+    private void outputMin(long resultmantissa, long resultexponent) {
+        int number = 0;
+        long change = resultmantissa;
+        for (int i = 0; change > 0; ++i) {
+            ++number;
+            change = change / 10;
+        }
+        long result[];
+        result = new long[number];
+        System.out.print("-");
+        for (int i = 0; resultmantissa > 0; ++i) {
+            result[i] = resultmantissa % 10;
+            resultmantissa = resultmantissa / 10;
+        }
+        for (int i = number - 1; i >= 0; --i) {
+            if (i == resultexponent - 1) {
+                System.out.print("," + result[i]);
+            }
+            else {
+                System.out.print(result[i]);
+            }
+        }
+    }
+
+    private void outputPlus(long resultmantissa, long resultexponent) {
+        int number = 0;
+        long change = resultmantissa;
+        for (int i = 0; change > 0; ++i) {
+            ++number;
+            change = change / 10;
+        }
+        long result[];
+        result = new long[number];
+        for (int i = 0; resultmantissa > 0; ++i) {
+            result[i] = resultmantissa % 10;
+            resultmantissa = resultmantissa / 10;
+        }
+        for (int i = number - 1; i >= 0; --i) {
+            if (i == resultexponent - 1) {
+                System.out.print("," + result[i]);
+            }
+            else {
+                System.out.print(result[i]);
+            }
+        }
+    }
+}
